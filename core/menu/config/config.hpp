@@ -22,6 +22,7 @@ public:
 		bool visuals_team_check{ false };
 		bool player_box{ false };
 		bool Bhop{ false };
+		bool speclist{ false };
 		bool visuals_enabled{ false };
 		bool misc_enabled{ false };
 	};

@@ -68,10 +68,10 @@ void misc()
 {
 	static bool checkbox;
 	zgui::next_column(-163,  38);
-	zgui::begin_groupbox("misc", { 250, 100 }, render::main_font); 
-	{
+	zgui::begin_groupbox("misc", { 250, 100 }, render::main_font); {
 		zgui::checkbox("active", c_system.misc_enabled);
 		zgui::checkbox("bhop", c_system.Bhop);
+		zgui::checkbox("spectator list", c_system.speclist);
 	}
 		zgui::end_groupbox();
 }

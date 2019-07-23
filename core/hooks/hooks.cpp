@@ -72,7 +72,7 @@ bool __stdcall hooks::create_move( float frame_time, c_usercmd* user_cmd ) {
 
 	if (interfaces::engine->is_connected() && interfaces::engine->is_in_game())
 	{
-		movement.Bhop(user_cmd);
+		misc.Bhop(user_cmd);
 
 	}
 

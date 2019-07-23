@@ -1,12 +1,12 @@
 #pragma once
 #include "../../../dependencies/common_includes.hpp"
 
-class cmovement
+class cmisc
 {
 public:
 	void Bhop(c_usercmd* user_cmd) noexcept;
-
+	void spectatorlist() noexcept;
 
 
 };
-extern cmovement movement;
+extern cmisc misc;

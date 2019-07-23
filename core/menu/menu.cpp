@@ -32,7 +32,7 @@ void menu::render()
 			misc1 = false;
 		}
 
-		zgui::next_column(174, -3);
+		zgui::next_column(164, -0.5);
 
 		if (zgui::tab_button("miscilities", { 150, 30 }, misc1))
 		{
@@ -53,6 +53,7 @@ void menu::render()
 void visuals()
 {
 	static bool checkbox;
+	zgui::next_column(-163, 38);
 	zgui::begin_groupbox("visuals", { 250, 100 }, render::main_font); {
 		zgui::checkbox("active", c_system.visuals_enabled);
 		zgui::checkbox("team esp", c_system.visuals_team_check);
@@ -66,7 +67,8 @@ void visuals()
 void misc()
 {
 	static bool checkbox;
-	zgui::begin_groupbox("misc", { 250, 50 }, render::main_font); 
+	zgui::next_column(-163,  38);
+	zgui::begin_groupbox("misc", { 250, 100 }, render::main_font); 
 	{
 		zgui::checkbox("active", c_system.misc_enabled);
 		zgui::checkbox("bhop", c_system.Bhop);

@@ -175,8 +175,8 @@ public:
 	netvar_fn( unsigned long, owner_handle, "DT_BaseEntity->m_hOwnerEntity" );
 	offset_fn( bool, dormant, 0xED);
 	netvar_fn( float, simulation_time, "DT_BaseEntity->m_flSimulationTime" );
-	offset_fn( vec3_t, origin, 0x134 );
-	offset_fn( vec3_t, view_offset, 0x104 );
+	offset_fn( vec3_t, origin, 0x138 );
+	offset_fn( vec3_t, view_offset, 0x108 );
 	netvar_fn( int, team, "DT_BaseEntity->m_iTeamNum" );
 	netvar_fn( bool, spotted, "DT_BaseEntity->m_bSpotted" );
 };

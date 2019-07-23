@@ -16,8 +16,10 @@ void menu::render()
 	//tab defs
 	void visuals();
 	void misc();
-	// beginning of menu
+
 	zgui::poll_input("Counter-Strike: Global Offensive");
+
+	// beginning of menu
 
 	if (zgui::begin_window("Fatality.Legit", { 500, 350 }, render::main_font, zgui::zgui_window_flags_none)) {
 

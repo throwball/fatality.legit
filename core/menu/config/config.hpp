@@ -21,5 +21,6 @@ public:
 		//colorv2 clr_grenadepred;
 		bool visuals_enabled{ false };
 		bool misc_enabled{ false };
+		float clr_box[4]{ 1.0f,1.0f,1.0f,1.0f };
 	};
 };

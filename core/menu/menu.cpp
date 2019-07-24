@@ -59,6 +59,7 @@ void visuals()
 		zgui::checkbox("team esp", c_system::get().visuals_team_check);
 		zgui::checkbox("dormant check", c_system::get().player_dormant);
 		zgui::checkbox("box esp", c_system::get().player_box);
+		zgui::checkbox("box esp color", c_system::get().player_box);
 		zgui::next_column(-8, 135);
 		zgui::begin_groupbox("visuals pt. 2", { 250, 100 }, render::main_font); {
 		//	zgui::checkbox("nade pred", c_system::get().nade_pred);

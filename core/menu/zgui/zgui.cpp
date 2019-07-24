@@ -173,7 +173,7 @@ static constexpr uint32_t hash(const char* str, const uint32_t value = 0x811c9dc
 	return *str ? hash(str + 1, (value ^ *str) * 0x1000193ull) : value;
 }
 
-void zgui::colorpicker(const char* id, colorv2& item) noexcept
+void zgui::colorpicker(const char* id, color& item) noexcept
 {
 	std::vector<std::string> id_split = split_str(id, '#');
 
@@ -186,7 +186,7 @@ void zgui::colorpicker(const char* id, colorv2& item) noexcept
 	const vec2 cursor_pos = pop_cursor_pos();
 	const vec2 draw_pos{ context.window.position.x + cursor_pos.x, context.window.position.y + cursor_pos.y };
 
-	colorv2 rainbow;
+	color rainbow;
 
 	// Tweak those instead of the rest
 	const float x_offset = 50;

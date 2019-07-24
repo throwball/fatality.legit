@@ -21,9 +21,11 @@
 #include "utilities/singleton.hpp"
 #include "utilities/fnv.hpp"
 #include "utilities/utilities.hpp"
+#include "interfaces/i_trace.hpp"
 #include "utilities/render.hpp"
 #include "utilities/hook.hpp"
 #include "interfaces/interfaces.hpp"
+#include "math/math.hpp"
 #include "utilities/netvars.hpp"
 
 #include "../source-sdk/sdk.hpp"

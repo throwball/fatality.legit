@@ -16,6 +16,7 @@ iv_model_render* interfaces::model_render = nullptr;
 void* interfaces::render_view = nullptr;
 iv_effects* interfaces::effects = nullptr;
 i_console* interfaces::console = nullptr;
+trace *interfaces::trace_ray = nullptr;
 i_localize* interfaces::localize = nullptr;
 i_game_event_manager* interfaces::event_manager = nullptr;
 iv_debug_overlay* interfaces::debug_overlay = nullptr;
@@ -30,6 +31,7 @@ void interfaces::initialize( ) {
 	surface = reinterpret_cast< i_surface* >( utilities::game::capture_interface( "vguimatsurface.dll", "VGUI_Surface031" ) );
 	material_system = reinterpret_cast< i_material_system* >( utilities::game::capture_interface( "materialsystem.dll", "VMaterialSystem080" ) );
 	model_info = reinterpret_cast< iv_model_info* >( utilities::game::capture_interface( "engine.dll", "VModelInfoClient004" ) );
+	trace_ray = reinterpret_cast<trace*>(utilities::game::capture_interface("engine.dll", "EngineTraceClient004"));
 	model_render = reinterpret_cast< iv_model_render* >( utilities::game::capture_interface( "engine.dll", "VEngineModel016" ) );
 	render_view = reinterpret_cast< void* >( utilities::game::capture_interface( "engine.dll", "VEngineRenderView014" ) );
 	console = reinterpret_cast< i_console* >( utilities::game::capture_interface( "vstdlib.dll", "VEngineCvar007" ) );

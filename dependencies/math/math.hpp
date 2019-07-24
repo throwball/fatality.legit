@@ -1,13 +1,15 @@
 #pragma once
 #include "../../source-sdk/math/vector3d.hpp"
 #include "../../source-sdk/classes/c_usercmd.hpp"
+#include "../../dependencies/utilities/singleton.hpp"
+
 
 constexpr double pi = 3.14159265358979323846;
 
 #define deg_to_rad( x )  ( (float)(x) * (float)( pi / 180.f ) )
 #define rad_to_deg( x )  ( (float)(x) * (float)( 180.f / pi ) )
 
-class c_math {
+class c_math : public singleton< c_math > {
 public:
 
 	float distance_based_fov(float distance, vec3_t angle, c_usercmd* cmd);

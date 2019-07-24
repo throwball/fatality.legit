@@ -175,6 +175,10 @@ public:
 		return ( *( original_fn** ) this ) [ 16 ]( this, static_cast< int >( value ) );
 	}
 
+	float get_float() {
+		return utilities::call_virtual<float(__thiscall *)(decltype(this)) >(this, 12)(this);
+	}
+
 private:
 	char pad_0x0000 [ 0x4 ];
 

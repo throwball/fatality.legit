@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\features\misc\misc.cpp" />
+    <ClCompile Include="core\features\visuals\nade_pred.cpp" />
     <ClCompile Include="core\features\visuals\visuals.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\config\config.cpp" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\features\misc\misc.hpp" />
+    <ClInclude Include="core\features\visuals\nade_pred.hpp" />
     <ClInclude Include="core\features\visuals\visuals.hpp" />
     <ClInclude Include="core\hooks\hooks.hpp" />
     <ClInclude Include="core\menu\config\archivex.hpp" />
@@ -175,6 +177,7 @@
     <ClInclude Include="dependencies\interfaces\ivmodelinfo.hpp" />
     <ClInclude Include="dependencies\interfaces\ivmodelrender.hpp" />
     <ClInclude Include="dependencies\interfaces\i_input_system.hpp" />
+    <ClInclude Include="dependencies\interfaces\i_trace.hpp" />
     <ClInclude Include="dependencies\math\math.hpp" />
     <ClInclude Include="dependencies\utilities\fnv.hpp" />
     <ClInclude Include="dependencies\utilities\netvars.hpp" />

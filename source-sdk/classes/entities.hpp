@@ -97,6 +97,8 @@ enum item_definition_indexes {
 	weapon_usps = 61,
 	weapon_cz75 = 63,
 	weapon_revolver = 64,
+	WEAPON_TAGRENADE = 68,
+	WEAPON_FRAG_GRENADE = 83,
 	weapon_knife_bayonet = 500,
 	weapon_knife_flip = 505,
 	weapon_knife_gut = 506,
@@ -109,6 +111,8 @@ enum item_definition_indexes {
 	weapon_knife_dagger = 516,
 	weapon_max
 };
+
+
 class entity_t {
 public:
 	void* animating( ) {
@@ -192,6 +196,7 @@ public:
 	netvar_fn( float, next_primary_attack, "DT_BaseCombatWeapon->m_flNextPrimaryAttack" );
 	netvar_fn( float, next_secondary_attack, "DT_BaseCombatWeapon->m_flNextSecondaryAttack" );
 	netvar_fn( int, clip1_count, "DT_BaseCombatWeapon->m_iClip1" );
+	netvar_fn(short, item_definition_index, "DT_BaseAttributableItem->m_iItemDefinitionIndex");
 	netvar_fn( int, clip2_count, "DT_BaseCombatWeapon->m_iClip2" );
 	netvar_fn( float, recoil_index, "DT_WeaponCSBase->m_flRecoilIndex" );
 
@@ -291,6 +296,12 @@ public:
 	vec3_t & abs_origin() {
 		using original_fn = vec3_t & (__thiscall*)(void*);
 		return (*(original_fn**)this)[10](this);;
+	}
+
+	vec3_t eye_pos() {
+		vec3_t ret;
+		utilities::call_virtual<void(__thiscall*)(void*, vec3_t&)>(this, 281)(this, ret); //the actual eye pods
+		return ret;
 	}
 
 	bool is_alive() {

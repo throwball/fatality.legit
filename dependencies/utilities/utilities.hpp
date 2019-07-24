@@ -5,6 +5,13 @@
 #define M_PI 3.14159265358979323846
 
 namespace utilities {
+	template<typename FuncType>
+	__forceinline static FuncType call_virtual(void* ppClass, int index) {
+		int* pVTable = *(int**)ppClass;
+		int dwAddress = pVTable[index];
+		return (FuncType)(dwAddress);
+	}
+
 	namespace math {
 		template <typename t> t clamp_value( t value, t min, t max ) {
 			if ( value > max ) {

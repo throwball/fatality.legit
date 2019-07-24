@@ -262,5 +262,7 @@ namespace zgui {
 
 	ZGUI_API bool tab_button(const char* id, vec2 size, bool value) noexcept;
 
+	ZGUI_API void colorpicker(const char* id, color& value) noexcept;
+
 }
 

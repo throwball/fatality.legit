@@ -55,10 +55,15 @@ void visuals()
 	static bool checkbox;
 	zgui::next_column(-163, 38);
 	zgui::begin_groupbox("visuals", { 250, 100 }, render::main_font); {
-		zgui::checkbox("active", c_system.visuals_enabled);
-		zgui::checkbox("team esp", c_system.visuals_team_check);
-		zgui::checkbox("dormant check", c_system.player_dormant);
-		zgui::checkbox("box esp", c_system.player_box);
+		zgui::checkbox("active", c_system::get().visuals_enabled);
+		zgui::checkbox("team esp", c_system::get().visuals_team_check);
+		zgui::checkbox("dormant check", c_system::get().player_dormant);
+		zgui::checkbox("box esp", c_system::get().player_box);
+
+		zgui::begin_groupbox("visuals pt. 2", { 250, 100 }, render::main_font); {
+			zgui::checkbox("nade pred", c_system::get().nade_pred);
+			//zgui::colorpicker("nade pred colors", c_system::get().clr_grenadepred);
+		}
 
 	}
 	zgui::end_groupbox();
@@ -71,7 +76,7 @@ void misc()
 	zgui::begin_groupbox("misc", { 250, 100 }, render::main_font); {
 		zgui::checkbox("active", c_system.misc_enabled);
 		zgui::checkbox("bhop", c_system.Bhop);
-		zgui::checkbox("spectator list", c_system.speclist);
+
 	}
 		zgui::end_groupbox();
 }

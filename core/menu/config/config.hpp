@@ -1,35 +1,25 @@
 #pragma once
-
+#include "../../../dependencies/common_includes.hpp"
 #include <filesystem>
 
-class cconfig final {
+class c_system : public singleton< c_system > {
 public:
-	void run(const char*) noexcept;
-	void load(size_t) noexcept;
-	void save(size_t) const noexcept;
-	void add(const char*) noexcept;
-	void remove(size_t) noexcept;
-	void rename(size_t, const char*) noexcept;
-
-
-	constexpr auto& get_configs() noexcept {
-		return configs;
-
-	}
+	int counts;
+	bool save_config(std::string file_name);
+	bool load_config(std::string file_name);
+	bool remove_config(std::string file_name);
+	void create_config(std::string name);
+	std::vector<std::string> get_configs();
 
 	struct {
 		bool player_dormant{ false };
 		bool visuals_team_check{ false };
 		bool player_box{ false };
 		bool Bhop{ false };
-		bool speclist{ false };
+		bool nade_pred = false;
+		bool grenade_prediction = false;
+		//colorv2 clr_grenadepred;
 		bool visuals_enabled{ false };
 		bool misc_enabled{ false };
 	};
-
-private:
-	std::filesystem::path path;
-	std::vector<std::string> configs;
 };
-
-extern cconfig c_system;

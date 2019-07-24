@@ -13,6 +13,9 @@ bool menu_open = true;
 // see zgui.hh for complete documentation.
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+
 // Color definition. Can be changed at any time just simply by editing this struct.
 static struct {
 	color window_border_inner_fill{ 60, 60, 60, 255 };
@@ -59,6 +62,7 @@ static bool prev_key_state[256];
 // Check for input polling.
 static bool input_loop_started = false;
 
+
 // Function for starting our input loop.
 void zgui::poll_input(std::string_view window_name)
 {
@@ -79,6 +83,8 @@ void zgui::poll_input(std::string_view window_name)
 	if (!input_loop_started)
 		input_loop_started = true;
 }
+
+
 
 // Function for starting our input loop.
 void zgui::poll_input(HWND hwnd)
@@ -165,6 +171,93 @@ std::vector<std::string> split_str(const char* str, const char separator) noexce
 static constexpr uint32_t hash(const char* str, const uint32_t value = 0x811c9dc5) noexcept
 {
 	return *str ? hash(str + 1, (value ^ *str) * 0x1000193ull) : value;
+}
+
+void zgui::colorpicker(const char* id, color& item) noexcept
+{
+	std::vector<std::string> id_split = split_str(id, '#');
+
+	const int control_height = 8;
+	const int control_width = 8;
+
+	const int slider_height = 10;
+	const int slider_width = 100;
+
+	const vec2 cursor_pos = pop_cursor_pos();
+	const vec2 draw_pos{ context.window.position.x + cursor_pos.x, context.window.position.y + cursor_pos.y };
+
+	color rainbow;
+
+	// Tweak those instead of the rest
+	const float x_offset = 50;
+	const float y_offset = 0;
+
+	float yoffset = draw_pos.y + y_offset;
+	float slideryoffset = draw_pos.y;
+	float xoffset = draw_pos.x + x_offset;
+	float sliderxoffset = draw_pos.x + x_offset;
+
+	const int min = 0;
+	const int max = 255;
+
+	const bool active = context.window.blocking == hash(id);
+
+	if (const bool hovered = mouse_in_region(draw_pos.x, draw_pos.y, control_width + 6, control_height); !active && hovered && key_pressed(VK_LBUTTON))
+	{
+		context.window.blocking = hash(id);
+	}
+	else if (active)
+	{
+		for (int i = 0; i < 100; i++)
+		{
+			if (mouse_in_region(xoffset + 100, yoffset, 10, 10))
+			{
+				if (key_down(VK_LBUTTON)) {
+					item.r = rainbow.r;
+					item.g = rainbow.g;
+					item.b = rainbow.b;
+				}
+				if (key_released(VK_LBUTTON))
+					context.window.blocking = 0;
+			}
+
+			if (xoffset >= draw_pos.x + x_offset)
+			{
+				xoffset -= 100;
+				yoffset += 10;
+			}
+			float hue = (i * .01f);
+			rainbow.FromHSV(hue, 1.f, 1.f);
+			context.window.render.emplace_back(zgui_control_render_t{ { xoffset + 100, yoffset, }, zgui_render_type::zgui_filled_rect,color { rainbow.r, rainbow.g, rainbow.b, 255 },"", { 10,10 } });
+			xoffset += 10;
+		}
+
+		if (key_down(VK_LBUTTON) && mouse_in_region(sliderxoffset, slideryoffset, slider_width + 5, slider_height)) {
+			float value_unmapped = std::clamp(mouse_pos.x - sliderxoffset, 0.0f, static_cast<float>(slider_width));
+			int value_mapped = static_cast<int>(value_unmapped / slider_width * (max - min) + min);
+			item.a = value_mapped;
+		}
+
+		if (key_released(VK_LBUTTON) && !mouse_in_region(sliderxoffset, slideryoffset, slider_width + 5, slider_height) && !mouse_in_region(xoffset + 100, yoffset, 10, 10) && !hovered)
+			context.window.blocking = 0;
+
+		const int dynamic_width = (static_cast<float>(item.a) - min) / (max - min) * slider_width - 2;
+
+		rainbow.r = item.r;
+		rainbow.g = item.g;
+		rainbow.b = item.b;
+		rainbow.a = item.a;
+
+		context.window.render.emplace_back(zgui_control_render_t{ { sliderxoffset + 1 , slideryoffset + 1  }, zgui_render_type::zgui_filled_rect, color{item.r,item.g,item.b,item.a}, "", { static_cast<float>(dynamic_width), control_height - 2 } });
+		context.window.render.emplace_back(zgui_control_render_t{ { sliderxoffset + 1 , slideryoffset + 1 }, zgui_render_type::zgui_filled_rect, global_colors.control_idle,"", { slider_width - 2, control_height - 2 } });
+		context.window.render.emplace_back(zgui_control_render_t{ { sliderxoffset , slideryoffset  }, zgui_render_type::zgui_filled_rect, global_colors.control_outline,"", { slider_width, control_height } });
+	}
+
+	context.window.render.emplace_back(zgui_control_render_t{ { draw_pos.x, draw_pos.y }, zgui_render_type::zgui_filled_rect, color{item.r,item.g,item.b,item.a},"", { 2 * control_width, control_height } });
+	context.window.render.emplace_back(zgui_control_render_t{ { draw_pos.x - 1, draw_pos.y - 1 }, zgui_render_type::zgui_rect, color{0,0,0,255},"", { 2 * control_width + 2, control_height + 2 } });
+
+	push_cursor_pos(vec2{ cursor_pos.x + 14 + global_config.item_spacing, cursor_pos.y });
+	push_cursor_pos(vec2{ cursor_pos.x, cursor_pos.y });
 }
 
 // Names for each of VKs

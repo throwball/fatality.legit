@@ -156,6 +156,7 @@
     </ClInclude>
     <ClInclude Include="core\features\visuals\visuals.hpp" />
     <ClInclude Include="core\hooks\hooks.hpp" />
+    <ClInclude Include="core\menu\config\archivex.hpp" />
     <ClInclude Include="core\menu\config\config.hpp" />
     <ClInclude Include="core\menu\menu.hpp" />
     <ClInclude Include="core\menu\zgui\zgui.hpp" />

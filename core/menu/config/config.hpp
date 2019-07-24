@@ -24,7 +24,7 @@ public:
 		// Visuals
 		bool player_dormant{ false };
 		bool player_box{ false };
-		float clr_box[4]{255, 255, 255 };
+		float clr_box[4] {255, 255, 255, 255};
 		bool visuals_team_check{ false };
 		bool visuals_enabled{ false };
 	} cfg;

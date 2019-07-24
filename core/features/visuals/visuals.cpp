@@ -107,12 +107,12 @@ void c_visuals::player_rendering(player_t* entity) noexcept
 
 	if (c_system.cfg.player_box) {
 
-		 auto r = c_system.cfg.clr_box[0];
-		 auto g = c_system.cfg.clr_box[1];
-		 auto b = c_system.cfg.clr_box[2];
+		auto red = c_system.cfg.clr_box[0] * 255;
+		auto green = c_system.cfg.clr_box[1] * 255;
+		auto blue = c_system.cfg.clr_box[2] * 255;
 
 		render::rect(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, color(0, 0, 0, 255 + alpha[entity->index()]));
-		render::rect(bbox.x, bbox.y, bbox.w, bbox.h, color(r, g, b, alpha[entity->index()]));
+		render::filled_rect(bbox.x, bbox.y, bbox.w, bbox.h, color(red, green, blue, alpha[entity->index()]));
 		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, color(0, 0, 0, 255 + alpha[entity->index()]));
 	}
 

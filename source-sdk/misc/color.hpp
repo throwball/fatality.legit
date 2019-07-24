@@ -20,6 +20,12 @@ struct color
 		 this->a = a;
 	}
 
+		color(float* clr) {
+			this->r = clr[0];
+			this->g = clr[1];
+			this->b = clr[2];
+			this->a = clr[3];
+		}
 
 
 	constexpr color& FromHSV(float h, float s, float v)
@@ -77,13 +83,6 @@ struct color
 		b = static_cast<int>(colOut[2] * 255);
 
 		return *this;
-	}
-
-		color(float* clr) {
-		this->r = clr[0];
-		this->g = clr[1];
-		this->b = clr[2];
-		this->a = clr[3];
 	}
 
 };

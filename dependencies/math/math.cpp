@@ -58,15 +58,14 @@ void c_math::sin_cos(float r, float* s, float* c) {
 	*c = cos(r);
 }
 
-void c_math::angle_vectors(vec3_t& angles, vec3_t& forward) {
-	float sp, sy, cp, cy;
+vec3_t c_math::angle_vector(vec3_t angle) {
+	auto sy = sin(angle.y / 180.f * static_cast<float>(M_PI));
+	auto cy = cos(angle.y / 180.f * static_cast<float>(M_PI));
 
-	sin_cos(deg_to_rad(angles.y), &sy, &cy);
-	sin_cos(deg_to_rad(angles.x), &sp, &cp);
+	auto sp = sin(angle.x / 180.f * static_cast<float>(M_PI));
+	auto cp = cos(angle.x / 180.f * static_cast<float>(M_PI));
 
-	forward.x = cp * cy;
-	forward.y = cp * sy;
-	forward.z = -sp;
+	return vec3_t(cp * cy, cp * sy, -sp);
 }
 
 float c_math::point_to_line(vec3_t point, vec3_t line_origin, vec3_t dir) {

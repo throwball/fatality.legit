@@ -1,5 +1,5 @@
 #include "nade_pred.hpp"
-
+/*
 c_nade_prediction nade_pred;
 
 void c_nade_prediction::predict(c_usercmd * user_cmd) noexcept {
@@ -239,4 +239,4 @@ void c_nade_prediction::draw() noexcept {
 			}
 		}
 	}
-}
+}*/

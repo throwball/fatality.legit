@@ -158,6 +158,10 @@ enum cvar_flags {
 
 class convar {
 public:
+
+//	float get_float() {
+	//	return utilities::call_virtual<float(__thiscall *)(decltype(this)) >(this, 12)(this);
+//	}
 	void set_value( const char* value ) {
 		using original_fn = void( __thiscall* )( convar*, const char* );
 		return ( *( original_fn** ) this ) [ 14 ]( this, value );
@@ -175,9 +179,6 @@ public:
 		return ( *( original_fn** ) this ) [ 16 ]( this, static_cast< int >( value ) );
 	}
 
-	float get_float() {
-		return utilities::call_virtual<float(__thiscall *)(decltype(this)) >(this, 12)(this);
-	}
 
 private:
 	char pad_0x0000 [ 0x4 ];

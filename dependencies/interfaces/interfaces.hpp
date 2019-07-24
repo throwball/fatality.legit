@@ -40,7 +40,7 @@ namespace interfaces {
 	extern iv_effects* effects;
 	extern iv_debug_overlay* debug_overlay;
 	extern i_console* console;
-	extern trace *trace_ray;
+	//extern trace* trace_ray;
 	extern i_localize* localize;
 	extern i_game_event_manager* event_manager;
 	extern IDirect3DDevice9* directx;

@@ -61,7 +61,7 @@ void visuals()
 		zgui::checkbox("box esp", c_system::get().player_box);
 
 		zgui::begin_groupbox("visuals pt. 2", { 250, 100 }, render::main_font); {
-			zgui::checkbox("nade pred", c_system::get().nade_pred);
+		//	zgui::checkbox("nade pred", c_system::get().nade_pred);
 			//zgui::colorpicker("nade pred colors", c_system::get().clr_grenadepred);
 		}
 
@@ -74,8 +74,8 @@ void misc()
 	static bool checkbox;
 	zgui::next_column(-163,  38);
 	zgui::begin_groupbox("misc", { 250, 100 }, render::main_font); {
-		zgui::checkbox("active", c_system.misc_enabled);
-		zgui::checkbox("bhop", c_system.Bhop);
+		zgui::checkbox("active", c_system::get().misc_enabled);
+		zgui::checkbox("bhop", c_system::get().Bhop);
 
 	}
 		zgui::end_groupbox();

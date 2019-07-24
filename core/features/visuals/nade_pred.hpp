@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include "../../../dependencies/common_includes.hpp"
 
 
@@ -39,4 +39,4 @@ public:
 	void draw() noexcept;
 };
 
-extern c_nade_prediction nade_pred;
+extern c_nade_prediction nade_pred;*/

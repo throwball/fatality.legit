@@ -5,7 +5,7 @@ cmisc misc;
 
 void cmisc::Bhop(c_usercmd* user_cmd) noexcept
 {
-	if (!c_system::get().Bhop || !c_system::get().misc_enabled)
+	if (!c_system.cfg.Bhop || !c_system.cfg.misc_enabled)
 		return;
 
 	auto local_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));

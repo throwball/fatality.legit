@@ -173,7 +173,7 @@ static constexpr uint32_t hash(const char* str, const uint32_t value = 0x811c9dc
 	return *str ? hash(str + 1, (value ^ *str) * 0x1000193ull) : value;
 }
 
-void zgui::colorpicker(const char* id, color& item) noexcept
+void zgui::colorpicker(const char* id, color item) noexcept
 {
 	std::vector<std::string> id_split = split_str(id, '#');
 

@@ -20,6 +20,7 @@
 
 #include "utilities/singleton.hpp"
 #include "utilities/fnv.hpp"
+#include "../source-sdk/misc/color.hpp"
 #include "utilities/utilities.hpp"
 #include "interfaces/i_trace.hpp"
 #include "utilities/render.hpp"

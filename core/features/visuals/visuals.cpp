@@ -10,7 +10,7 @@ void c_visuals::run() noexcept
 {
 	auto local_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
 
-	if (!c_system::get().visuals_enabled)
+	if (!c_system.cfg.visuals_enabled)
 		return;
 
 	if (!local_player)
@@ -30,7 +30,7 @@ void c_visuals::run() noexcept
 		if (entity->health() <= 0)
 			continue;
 
-		if (entity->team() == local_player->team() && !c_system::get().visuals_team_check)
+		if (entity->team() == local_player->team() && !c_system.cfg.visuals_team_check)
 			continue;
 
 
@@ -41,8 +41,8 @@ void c_visuals::run() noexcept
 
 		if (new_alpha > (entity->has_gun_game_immunity() ? 130 : 210))
 			new_alpha = (entity->has_gun_game_immunity() ? 130 : 210);
-		if (new_alpha < c_system::get().player_dormant ? 50 : 0)
-			new_alpha = c_system::get().player_dormant ? 50 : 0;
+		if (new_alpha < c_system.cfg.player_dormant ? 50 : 0)
+			new_alpha = c_system.cfg.player_dormant ? 50 : 0;
 
 		player_rendering(entity);
 
@@ -95,7 +95,7 @@ void c_visuals::entity_esp(player_t* entity) noexcept
 
 void c_visuals::player_rendering(player_t* entity) noexcept
 {
-	if ((entity->dormant() && alpha[entity->index()] == 0) && !c_system::get().player_dormant)
+	if ((entity->dormant() && alpha[entity->index()] == 0) && !c_system.cfg.player_dormant)
 		return;
 
 	player_info_t info;
@@ -105,14 +105,14 @@ void c_visuals::player_rendering(player_t* entity) noexcept
 	if (!get_playerbox(entity, bbox))
 		return;
 
-	if (c_system::get().player_box) {
+	if (c_system.cfg.player_box) {
 
-		auto red = c_system::get().clr_box[0] * 255;
-		auto green = c_system::get().clr_box[1] * 255;
-		auto blue = c_system::get().clr_box[2] * 255;
+		 auto r = c_system.cfg.clr_box[0];
+		 auto g = c_system.cfg.clr_box[1];
+		 auto b = c_system.cfg.clr_box[2];
 
 		render::rect(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, color(0, 0, 0, 255 + alpha[entity->index()]));
-		render::rect(bbox.x, bbox.y, bbox.w, bbox.h, color(red, green, blue, alpha[entity->index()]));
+		render::rect(bbox.x, bbox.y, bbox.w, bbox.h, color(r, g, b, alpha[entity->index()]));
 		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, color(0, 0, 0, 255 + alpha[entity->index()]));
 	}
 

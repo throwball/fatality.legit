@@ -6,18 +6,21 @@
 #include <cstdint>
 #include <d3d9.h>
 
+
 struct color
 {
-	int r, g, b, a;
+	 int r, g, b, a;
+	color() = default;
+	
 
-	color(int r, int g, int b, int a = 255) {
-		this->r = r;
-		this->g = g;
-		this->b = b;
-		this->a = a;
+		color(int r, int g, int b, int a = 255) {
+		 this->r = r;
+		 this->g = g;
+		 this->b = b;
+		 this->a = a;
 	}
 
-	color() = default;
+
 
 	constexpr color& FromHSV(float h, float s, float v)
 	{
@@ -72,6 +75,15 @@ struct color
 		r = static_cast<int>(colOut[0] * 255);
 		g = static_cast<int>(colOut[1] * 255);
 		b = static_cast<int>(colOut[2] * 255);
+
 		return *this;
 	}
+
+		color(float* clr) {
+		this->r = clr[0];
+		this->g = clr[1];
+		this->b = clr[2];
+		this->a = clr[3];
+	}
+
 };

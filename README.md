@@ -8,5 +8,4 @@
 4. Fix problem with dormant.
 5. Fix Nade Pred.
 6. Hitsounds
-
 #more to come. I'll add more when i think of them.

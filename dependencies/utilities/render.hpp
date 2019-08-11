@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "../interfaces/interfaces.hpp"
-#include "..//..//source-sdk/misc/color.hpp"
+#include "../../core/menu/zgui/zgui.hpp"
 
 namespace render {
 	enum font_flags {
@@ -24,10 +24,10 @@ namespace render {
 
 	void setup_fonts();
 
-	void line(int x, int y, int x2, int y2, color c) noexcept;
-	void rect(int x, int y, int x2, int y2, color c) noexcept;
-	void filled_rect(int x, int y, int x2, int y2, color c) noexcept;
-	void text(int x, int y, color color, int font, bool center, std::string str) noexcept;
+	void line(int x, int y, int x2, int y2, Color c) noexcept;
+	void rect(int x, int y, int x2, int y2, Color c) noexcept;
+	void filled_rect(int x, int y, int x2, int y2, Color c) noexcept;
+	void text(int x, int y, Color color, int font, bool center, std::string str) noexcept;
 	void get_text_size(unsigned long font, std::string str, int& width, int& height) noexcept;
 	float get_frametime() noexcept;
 };

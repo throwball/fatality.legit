@@ -6,4 +6,5 @@ namespace menu {
 
 //	void draw_watermark();
 	extern bool menuopen;
+
 }

@@ -59,8 +59,8 @@ void visuals()
 		zgui::checkbox("team esp", c_system.cfg.visuals_team_check);
 		zgui::checkbox("dormant check", c_system.cfg.player_dormant);
 		zgui::checkbox("box esp", c_system.cfg.player_box);
-		zgui::colorpicker("box esp color", color(c_system.cfg.clr_box));
-
+		zgui::colorpicker("box esp color", c_system.cfg.box_clr);
+		
 		zgui::next_column(-8, 140);
 		zgui::begin_groupbox("visuals pt. 2", { 250, 100 }, render::main_font); {
 

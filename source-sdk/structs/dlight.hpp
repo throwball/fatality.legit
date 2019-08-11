@@ -12,7 +12,7 @@ struct dlight_t {
 	int flags;
 	vec3_t origin;
 	float radius;
-	color color;
+	Color color;
 	float die_time;
 	float decay;
 	float min_light;

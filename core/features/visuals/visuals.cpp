@@ -88,13 +88,14 @@ void c_visuals::entity_esp(player_t* entity) noexcept
 	//	else if (client_class->class_id == class_ids::chostage) {
 	//	drop_name = "hostage";
 	//	}
-		render::text(entity_position.x, entity_position.y, color(255, 255, 255), render::main_font, true, drop_name.c_str());
+		render::text(entity_position.x, entity_position.y, Color(255, 255, 255), render::main_font, true, drop_name.c_str());
 		//render.draw_text(entity_position.x, entity_position.y, render::main_font, drop_name.c_str(), true, color(255, 255, 255));
 	}
 }
 
 void c_visuals::player_rendering(player_t* entity) noexcept
 {
+	color = Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, c_system.cfg.box_clr.a);
 	if ((entity->dormant() && alpha[entity->index()] == 0) && !c_system.cfg.player_dormant)
 		return;
 
@@ -107,13 +108,10 @@ void c_visuals::player_rendering(player_t* entity) noexcept
 
 	if (c_system.cfg.player_box) {
 
-		auto red = c_system.cfg.clr_box[0] * 255;
-		auto green = c_system.cfg.clr_box[1] * 255;
-		auto blue = c_system.cfg.clr_box[2] * 255;
 
-		render::rect(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, color(0, 0, 0, 255 + alpha[entity->index()]));
-		render::filled_rect(bbox.x, bbox.y, bbox.w, bbox.h, color(red, green, blue, alpha[entity->index()]));
-		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, color(0, 0, 0, 255 + alpha[entity->index()]));
+		render::rect(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, (c_system.cfg.box_clr.r, + alpha[entity->index()]));
+		render::filled_rect(bbox.x, bbox.y, bbox.w, bbox.h, (c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, alpha[entity->index()]));
+		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, (c_system.cfg.box_clr.r, + alpha[entity->index()]));
 	}
 
 }

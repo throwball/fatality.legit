@@ -5,7 +5,7 @@ class c_visuals {
 public:
 	void run() noexcept;
 	void entity_esp(player_t * entity) noexcept;
-
+	Color color;
 private:
 	int alpha[65];
 	bool last_dormant[65];

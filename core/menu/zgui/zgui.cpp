@@ -18,20 +18,20 @@ bool menu_open = true;
 
 // Color definition. Can be changed at any time just simply by editing this struct.
 static struct {
-	color window_border_inner_fill{ 60, 60, 60, 255 };
+	Color window_border_inner_fill{ 60, 60, 60, 255 };
 //	color window_border_fill{ 40, 40, 40, 255 };
-	color window_border_color{ 219, 79, 50, 255 };
-	color window_background{ 209, 91, 67, 255 };
+	Color window_border_color{ 219, 79, 50, 255 };
+	Color window_background{ 209, 91, 67, 255 };
 
-	color control_outline{ 23, 23, 30, 255 };
-	color control_active_or_clicked{ 108, 92, 231, 255 };
-	color control_idle{ 62, 62, 72, 255 };
+	Color control_outline{ 23, 23, 30, 255 };
+	Color control_active_or_clicked{ 108, 92, 231, 255 };
+	Color control_idle{ 62, 62, 72, 255 };
 
-	color color_groupbox_bg{ 50, 50, 50, 255 };
-	color color_text{ 203, 203, 203, 255 };
-	color color_text_dimmer{ 99, 110, 114, 255 };
-	color color_slider{ 108, 92, 231, 255 };
-	color color_combo_bg{ 108, 92, 231, 255 };
+	Color color_groupbox_bg{ 50, 50, 50, 255 };
+	Color color_text{ 203, 203, 203, 255 };
+	Color color_text_dimmer{ 99, 110, 114, 255 };
+	Color color_slider{ 108, 92, 231, 255 };
+	Color color_combo_bg{ 108, 92, 231, 255 };
 } global_colors;
 
 static struct {
@@ -173,7 +173,7 @@ static constexpr uint32_t hash(const char* str, const uint32_t value = 0x811c9dc
 	return *str ? hash(str + 1, (value ^ *str) * 0x1000193ull) : value;
 }
 
-void zgui::colorpicker(const char* id, color item) noexcept
+void zgui::colorpicker(const char* id, color2& item) noexcept
 {
 	std::vector<std::string> id_split = split_str(id, '#');
 
@@ -186,7 +186,7 @@ void zgui::colorpicker(const char* id, color item) noexcept
 	const vec2 cursor_pos = pop_cursor_pos();
 	const vec2 draw_pos{ context.window.position.x + cursor_pos.x, context.window.position.y + cursor_pos.y };
 
-	color rainbow;
+	color2 rainbow;
 
 	// Tweak those instead of the rest
 	const float x_offset = 50;
@@ -228,7 +228,7 @@ void zgui::colorpicker(const char* id, color item) noexcept
 			}
 			float hue = (i * .01f);
 			rainbow.FromHSV(hue, 1.f, 1.f);
-			context.window.render.emplace_back(zgui_control_render_t{ { xoffset + 100, yoffset, }, zgui_render_type::zgui_filled_rect,color { rainbow.r, rainbow.g, rainbow.b, 255 },"", { 10,10 } });
+			context.window.render.emplace_back(zgui_control_render_t{ { xoffset + 100, yoffset, }, zgui_render_type::zgui_filled_rect,Color { rainbow.r, rainbow.g, rainbow.b, 255 },"", { 10,10 } });
 			xoffset += 10;
 		}
 
@@ -248,13 +248,13 @@ void zgui::colorpicker(const char* id, color item) noexcept
 		rainbow.b = item.b;
 		rainbow.a = item.a;
 
-		context.window.render.emplace_back(zgui_control_render_t{ { sliderxoffset + 1 , slideryoffset + 1  }, zgui_render_type::zgui_filled_rect, color{item.r,item.g,item.b,item.a}, "", { static_cast<float>(dynamic_width), control_height - 2 } });
+		context.window.render.emplace_back(zgui_control_render_t{ { sliderxoffset + 1 , slideryoffset + 1  }, zgui_render_type::zgui_filled_rect, Color{item.r,item.g,item.b,item.a}, "", { static_cast<float>(dynamic_width), control_height - 2 } });
 		context.window.render.emplace_back(zgui_control_render_t{ { sliderxoffset + 1 , slideryoffset + 1 }, zgui_render_type::zgui_filled_rect, global_colors.control_idle,"", { slider_width - 2, control_height - 2 } });
 		context.window.render.emplace_back(zgui_control_render_t{ { sliderxoffset , slideryoffset  }, zgui_render_type::zgui_filled_rect, global_colors.control_outline,"", { slider_width, control_height } });
 	}
 
-	context.window.render.emplace_back(zgui_control_render_t{ { draw_pos.x, draw_pos.y }, zgui_render_type::zgui_filled_rect, color{item.r,item.g,item.b,item.a},"", { 2 * control_width, control_height } });
-	context.window.render.emplace_back(zgui_control_render_t{ { draw_pos.x - 1, draw_pos.y - 1 }, zgui_render_type::zgui_rect, color{0,0,0,255},"", { 2 * control_width + 2, control_height + 2 } });
+	context.window.render.emplace_back(zgui_control_render_t{ { draw_pos.x, draw_pos.y }, zgui_render_type::zgui_filled_rect, Color{item.r,item.g,item.b,item.a},"", { 2 * control_width, control_height } });
+	context.window.render.emplace_back(zgui_control_render_t{ { draw_pos.x - 1, draw_pos.y - 1 }, zgui_render_type::zgui_rect, Color{0,0,0,255},"", { 2 * control_width + 2, control_height + 2 } });
 
 	push_cursor_pos(vec2{ cursor_pos.x + 14 + global_config.item_spacing, cursor_pos.y });
 	push_cursor_pos(vec2{ cursor_pos.x, cursor_pos.y });

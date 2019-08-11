@@ -122,13 +122,74 @@ namespace zgui {
 	struct multi_select_item { std::string_view name; bool* value; };
 	// Two dimensional vector.
 	struct vec2 { float x, y; };
+	//color
+	struct color2
+	{
+		int r, g, b, a;
+
+		constexpr color2& FromHSV(float h, float s, float v)
+		{
+			float colOut[3]{ };
+			if (s == 0.0f)
+			{
+				r = g = b = static_cast<int>(v * 255);
+				return *this;
+			}
+
+			h = std::fmodf(h, 1.0f) / (60.0f / 360.0f);
+			int   i = static_cast<int>(h);
+			float f = h - static_cast<float>(i);
+			float p = v * (1.0f - s);
+			float q = v * (1.0f - s * f);
+			float t = v * (1.0f - s * (1.0f - f));
+
+			switch (i)
+			{
+			case 0:
+				colOut[0] = v;
+				colOut[1] = t;
+				colOut[2] = p;
+				break;
+			case 1:
+				colOut[0] = q;
+				colOut[1] = v;
+				colOut[2] = p;
+				break;
+			case 2:
+				colOut[0] = p;
+				colOut[1] = v;
+				colOut[2] = t;
+				break;
+			case 3:
+				colOut[0] = p;
+				colOut[1] = q;
+				colOut[2] = v;
+				break;
+			case 4:
+				colOut[0] = t;
+				colOut[1] = p;
+				colOut[2] = v;
+				break;
+			case 5: default:
+				colOut[0] = v;
+				colOut[1] = p;
+				colOut[2] = q;
+				break;
+			}
+
+			r = static_cast<int>(colOut[0] * 255);
+			g = static_cast<int>(colOut[1] * 255);
+			b = static_cast<int>(colOut[2] * 255);
+			return *this;
+		}
+	};
 
 	/// "Proxy" functions definitions.
 	
-	using line_t = std::add_pointer_t<void(int x, int y, int x2, int y2, color color) noexcept>;
-	using rect_t = std::add_pointer_t<void(int x, int y, int x2, int y2, color color) noexcept>;
-	using filled_rect_t = std::add_pointer_t<void(int x, int y, int x2, int y2, color color) noexcept>;
-	using text_t = std::add_pointer_t<void(int x, int y, color color, int font, bool center, std::string text) noexcept>;
+	using line_t = std::add_pointer_t<void(int x, int y, int x2, int y2, Color color) noexcept>;
+	using rect_t = std::add_pointer_t<void(int x, int y, int x2, int y2, Color color) noexcept>;
+	using filled_rect_t = std::add_pointer_t<void(int x, int y, int x2, int y2, Color color) noexcept>;
+	using text_t = std::add_pointer_t<void(int x, int y, Color color, int font, bool center, std::string text) noexcept>;
 	using get_text_size_t = std::add_pointer_t<void(unsigned long font, std::string text, int& wide, int& tall) noexcept>;
 	using get_frametime = std::add_pointer_t<float() noexcept>;
 	///
@@ -185,7 +246,7 @@ namespace zgui {
 	{
 		vec2 draw_position;
 		zgui_render_type render_type;
-		color color;
+		Color color;
 		std::string text;
 		vec2 size;
 		int font = 0;
@@ -262,7 +323,7 @@ namespace zgui {
 
 	ZGUI_API bool tab_button(const char* id, vec2 size, bool value) noexcept;
 
-	ZGUI_API void colorpicker(const char* id, color value) noexcept;
+	ZGUI_API void colorpicker(const char* id, color2& value) noexcept;
 
 }
 

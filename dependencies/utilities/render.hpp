@@ -28,6 +28,8 @@ namespace render {
 	void rect(int x, int y, int x2, int y2, Color c) noexcept;
 	void filled_rect(int x, int y, int x2, int y2, Color c) noexcept;
 	void text(int x, int y, Color color, int font, bool center, std::string str) noexcept;
+
 	void get_text_size(unsigned long font, std::string str, int& width, int& height) noexcept;
+	void draw_corner_box(int x, int y, int w, int h, Color c);
 	float get_frametime() noexcept;
 };

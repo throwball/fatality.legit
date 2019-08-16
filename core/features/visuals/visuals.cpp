@@ -106,12 +106,17 @@ void c_visuals::player_rendering(player_t* entity) noexcept
 	if (!get_playerbox(entity, bbox))
 		return;
 
-	if (c_system.cfg.player_box) {
 
 
-		render::rect(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b + alpha[entity->index()]));
+	if (c_system.cfg.player_box == 1) {
+		// normal box
 		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b + alpha[entity->index()]));
-
+	}
+		//edge
+	if (c_system.cfg.player_box == 2) {
+		render::draw_corner_box(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, Color(0, 0, 0, 255 + alpha[entity->index()]));
+		render::draw_corner_box(bbox.x, bbox.y, bbox.w, bbox.h, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, 255 + alpha[entity->index()]));
+		render::draw_corner_box(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(0, 0, 0, 255 + alpha[entity->index()]));
 	}
 
 }

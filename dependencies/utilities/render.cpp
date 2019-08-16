@@ -14,6 +14,18 @@ void render::line(int x, int y, int x2, int y2, Color c) noexcept {
 	interfaces::surface->draw_line(x, y, x2, y2);
 }
 
+void render::draw_corner_box(int x, int y, int w, int h, Color c) {
+	interfaces::surface->set_drawing_color(c.r, c.g, c.b, c.a);
+	interfaces::surface->draw_line(x, y, x, y + (h / 5));
+	interfaces::surface->draw_line(x, y, x + (w / 5), y);
+	interfaces::surface->draw_line(x + w, y, x + w - (w / 5), y);
+	interfaces::surface->draw_line(x + w, y, x + w, y + (h / 5));
+	interfaces::surface->draw_line(x, y + h, x + (w / 5), y + h);
+	interfaces::surface->draw_line(x, y + h, x, y + h - (h / 5));
+	interfaces::surface->draw_line(x + w, y + h, x + w - (w / 5), y + h);
+	interfaces::surface->draw_line(x + w, y + h, x + w, y + h - (h / 5));
+}
+
 void render::rect(int x, int y, int x2, int y2, Color c) noexcept {
 	interfaces::surface->set_drawing_color(c.r, c.g, c.b, c.a);
 	interfaces::surface->draw_outlined_rect(x, y, x2, y2);

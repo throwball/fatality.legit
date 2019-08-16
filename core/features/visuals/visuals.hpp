@@ -5,7 +5,6 @@ class c_visuals {
 public:
 	void run() noexcept;
 	void entity_esp(player_t * entity) noexcept;
-	Color color;
 private:
 	int alpha[65];
 	bool last_dormant[65];
@@ -36,6 +35,8 @@ private:
 			this->h = h;
 		}
 	};
+
+	Color color;
 
 	bool get_playerbox(player_t* ent, box& in) {
 		vec3_t origin, min, max, flb, brt, blb, frt, frb, brb, blt, flt;

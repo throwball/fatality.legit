@@ -60,11 +60,11 @@ void visuals()
 	{
 		zgui::checkbox("active", c_system.cfg.visuals_enabled);
 		zgui::checkbox("team esp", c_system.cfg.visuals_team_check);
-		zgui::checkbox("dormant check", c_system.cfg.player_dormant);
+		zgui::checkbox("skeleton esp", c_system.cfg.skeleton);
 
 		zgui::next_column(-8, 140);
 
-		zgui::begin_groupbox("visuals pt. 2", { 250, 100 }, render::main_font); 
+		zgui::begin_groupbox("visuals stuff", { 250, 100 }, render::main_font); 
 		{
 			zgui::combobox("box esp",  { "off", "normal",  "edge" }, c_system.cfg.player_box);
 			zgui::colorpicker("box esp color", c_system.cfg.box_clr);

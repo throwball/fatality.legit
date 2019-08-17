@@ -304,6 +304,14 @@ public:
 		return ret;
 	}
 
+	vec3_t get_bone_position(int bone) {
+		matrix_t bone_matrices[128];
+		if (setup_bones(bone_matrices, 128, 256, 0.0f))
+			return vec3_t{ bone_matrices[bone][0][3], bone_matrices[bone][1][3], bone_matrices[bone][2][3] };
+		else
+			return vec3_t{ };
+	}
+
 	bool is_alive() {
 		return life_state() == 0;
 	}

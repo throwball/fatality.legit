@@ -24,6 +24,7 @@ public:
 		// Visuals
 		bool player_dormant{ false };
 		int player_box;
+		bool skeleton{ false };
 		zgui::color2 box_clr{ 255, 255, 255, 255 };
 
 		bool visuals_team_check{ false };

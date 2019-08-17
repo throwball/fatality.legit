@@ -131,9 +131,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\features\misc\misc.cpp" />
-    <ClCompile Include="core\features\visuals\nade_pred.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="core\features\visuals\visuals.cpp" />
     <ClCompile Include="core\hooks\hooks.cpp" />
     <ClCompile Include="core\menu\config\config.cpp" />
@@ -151,9 +148,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\features\misc\misc.hpp" />
-    <ClInclude Include="core\features\visuals\nade_pred.hpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="core\features\visuals\visuals.hpp" />
     <ClInclude Include="core\hooks\hooks.hpp" />
     <ClInclude Include="core\menu\config\archivex.hpp" />

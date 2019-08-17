@@ -12,7 +12,7 @@ enum bone_flags {
 	bone_screen_align_sphere = 0x08,
 	bone_screen_align_cylinder = 0x10,
 	bone_used_mask = 0x0007ff00,
-	bone_used_by_anything = 0x0007ff00,
+	bone_used_by_anything = 0x0007ff00,        
 	bone_used_by_hitbox = 0x00000100,
 	bone_used_by_attachment = 0x00000200,
 	bone_used_by_vertex_mask = 0x0003fc00,

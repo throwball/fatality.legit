@@ -44,8 +44,11 @@ void c_visuals::run() noexcept
 		if (new_alpha < c_system.cfg.player_dormant ? 50 : 0)
 			new_alpha = c_system.cfg.player_dormant ? 50 : 0;
 
-		player_rendering(entity);
+		alpha[i] = new_alpha;
 
+		player_rendering(entity);
+		skeleton(entity);
+		last_dormant[i] = entity->dormant();
 	}
 
 	//non player drawing loop
@@ -93,6 +96,33 @@ void c_visuals::entity_esp(player_t* entity) noexcept
 	}
 }
 
+void c_visuals::skeleton(player_t* entity) noexcept {
+	if (!c_system.cfg.skeleton)
+		return;
+
+	auto p_studio_hdr = interfaces::model_info->get_studio_model(entity->model());
+
+	if (!p_studio_hdr)
+		return;
+
+	vec3_t v_parent, v_child, s_parent, s_child;
+
+	for (int i = 0; i < p_studio_hdr->bones_count; i++) {
+		studio_bone_t* bone = p_studio_hdr->bone(i);
+
+		if (!bone)
+			return;
+
+		if (bone && (bone->flags & bone_used_by_hitbox) && (bone->parent != -1)) {
+			v_child = entity->get_bone_position(i);
+			v_parent = entity->get_bone_position(bone->parent);
+
+			if (math.world_to_screen(v_parent, s_parent) && math.world_to_screen(v_child, s_child))
+				render::line(s_parent[0], s_parent[1], s_child[0], s_child[1], Color(255, 255, 255, alpha[entity->index()]));
+		}
+	}
+}
+
 void c_visuals::player_rendering(player_t* entity) noexcept
 {
 	color = Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, c_system.cfg.box_clr.a);
@@ -118,5 +148,5 @@ void c_visuals::player_rendering(player_t* entity) noexcept
 		render::draw_corner_box(bbox.x, bbox.y, bbox.w, bbox.h, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, 255 + alpha[entity->index()]));
 		render::draw_corner_box(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(0, 0, 0, 255 + alpha[entity->index()]));
 	}
-
+	
 }

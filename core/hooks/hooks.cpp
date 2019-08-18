@@ -44,7 +44,7 @@ void hooks::initialize( ) {
 	interfaces::console->get_convar( "crosshair" )->set_value( 1 );
 
 	render::setup_fonts( );
-
+	//1
 	zgui::functions.draw_line = render::line;
 	zgui::functions.draw_rect = render::rect;
 	zgui::functions.draw_filled_rect = render::filled_rect;

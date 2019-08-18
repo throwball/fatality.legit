@@ -862,7 +862,7 @@ void zgui::combobox(const char* id, std::vector<std::string>items, int& value) n
 {
 	std::vector<std::string> id_split = split_str(id, '#');
 
-	const int control_width = 70;
+	const int control_width = 55;
 	const int control_height = 20;
 
 	value = std::clamp(value, 0, static_cast<int>(items.size()) - 1);

@@ -60,6 +60,7 @@ void visuals()
 	{
 		zgui::checkbox("active", c_system.cfg.visuals_enabled);
 		zgui::checkbox("team esp", c_system.cfg.visuals_team_check);
+		zgui::checkbox("dormant check", c_system.cfg.player_dormant);
 		zgui::checkbox("skeleton esp", c_system.cfg.skeleton);
 
 		zgui::next_column(-8, 140);

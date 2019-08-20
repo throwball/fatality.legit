@@ -156,6 +156,7 @@
     <ClInclude Include="core\menu\zgui\zgui.hpp" />
     <ClInclude Include="dependencies\common_includes.hpp" />
     <ClInclude Include="dependencies\interfaces\cglobalvarsbase.hpp" />
+    <ClInclude Include="dependencies\interfaces\glow_manager.hpp" />
     <ClInclude Include="dependencies\interfaces\iclientstate.hpp" />
     <ClInclude Include="dependencies\interfaces\iconsole.hpp" />
     <ClInclude Include="dependencies\interfaces\ibaseclientdll.hpp" />

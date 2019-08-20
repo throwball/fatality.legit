@@ -1,5 +1,6 @@
 #include "visuals.hpp"
 #include "../../../dependencies/math/math.hpp"
+#include "../../../source-sdk/classes/entities.hpp"
 
 
 #define TIME_TO_TICKS(dt) ((int)( 0.5f + (float)(dt) / interfaces::globals->interval_per_tick))
@@ -64,36 +65,35 @@ void c_visuals::run() noexcept
 	}
 }
 
-void c_visuals::entity_esp(player_t* entity) noexcept
-{
-	auto model = entity->model();
-	if (!model)
+void c_visuals::entity_esp(player_t* entity) noexcept {
+	//if (!c_system.cfg.entity_esp)
+	//	return;
+
+//	if (!entity)
+	//	return;
+
+	//if (entity->dormant())
+		//return;
+
+//	auto model_name = interfaces::model_info->get_model_name(entity->model());
+	//vec3_t entity_position, entity_origin;
+	//entity_origin = entity->origin();
+	//auto client_class = entity->client_class1();
+
+/*	if (!math.world_to_screen(entity_origin, entity_position))
 		return;
 
-	if (model) {
-		vec3_t entity_position, entity_origin;
-		entity_origin = entity->origin();
-		auto client_class = entity->clientclass();
-		auto model = interfaces::model_info->get_studio_model(entity->model());
-		if (!model)
-			return;
-		if (!math.world_to_screen(entity_origin, entity_position))
-			return;
-
-		std::string name = model->name_char_array, drop_name;
-
-		//if (name.find("dust_soccer_ball001") != std::string::npos) {
-	//		drop_name = "soccer ball";
-		//}
-	//	if (client_class->class_id == class_ids::cchicken) {
-		//	drop_name = "chicken";
-	//	}
-	//	else if (client_class->class_id == class_ids::chostage) {
-	//	drop_name = "hostage";
-	//	}
-		render::text(entity_position.x, entity_position.y, Color(255, 255, 255), render::main_font, true, drop_name.c_str());
-		//render.draw_text(entity_position.x, entity_position.y, render::main_font, drop_name.c_str(), true, color(255, 255, 255));
+	if (client_class->class_id == class_ids::cchicken) {
+		render::text(entity_position.x, entity_position.y, render::main_font, "chicken", true, Color(255, 255, 255));
 	}
+
+	else if (strstr(model_name, "dust_soccer_ball001")) {
+		render::text(entity_position.x, entity_position.y, render::main_font, "soccer ball", true, Color(255, 255, 255));
+	}
+
+	else if (client_class->class_id == class_ids::chostage) {
+		render::text(entity_position.x, entity_position.y, render::main_font, "hostage", true, Color(255, 255, 255));
+	}*/
 }
 
 void c_visuals::skeleton(player_t* entity) noexcept {
@@ -123,6 +123,7 @@ void c_visuals::skeleton(player_t* entity) noexcept {
 	}
 }
 
+
 void c_visuals::player_rendering(player_t* entity) noexcept
 {
 	color = Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, c_system.cfg.box_clr.a);
@@ -148,5 +149,20 @@ void c_visuals::player_rendering(player_t* entity) noexcept
 		render::draw_corner_box(bbox.x, bbox.y, bbox.w, bbox.h, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, 255 + alpha[entity->index()]));
 		render::draw_corner_box(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(0, 0, 0, 255 + alpha[entity->index()]));
 	}
+
+	if (c_system.cfg.player_health) {
+		box temp(bbox.x - 5, bbox.y + (bbox.h - bbox.h * (utilities::math::clamp_value<int>(entity->health(), 0, 100.f) / 100.f)), 1, bbox.h * (utilities::math::clamp_value<int>(entity->health(), 0, 100) / 100.f) - (entity->health() >= 100 ? 0 : -1));
+		box temp_bg(bbox.x - 5, bbox.y, 1, bbox.h);
+
+		auto health_color = Color((255 - entity->health() * 2.55), (entity->health() * 2.55), 0, alpha[entity->index()]);
+
+		if (entity->health() > 100)
+			health_color = Color(0, 255, 0);
+
+		render::filled_rect(temp_bg.x - 1, temp_bg.y - 1, temp_bg.w + 2, temp_bg.h + 2, Color(0, 0, 0, 25 + alpha[entity->index()]));
+		render::filled_rect(temp.x, temp.y, temp.w, temp.h, Color(health_color));
+	}
+	 
+
 	
 }

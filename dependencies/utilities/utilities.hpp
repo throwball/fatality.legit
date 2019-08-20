@@ -27,4 +27,6 @@ namespace utilities {
 		void* capture_interface( const char* mod, const char* iface );
 	}
 	std::uint8_t* pattern_scan( void* module, const char* signature );
+
+	void material_setup();
 }

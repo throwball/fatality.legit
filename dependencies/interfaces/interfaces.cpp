@@ -12,6 +12,7 @@ i_surface* interfaces::surface = nullptr;
 c_global_vars_base* interfaces::globals = nullptr;
 i_material_system* interfaces::material_system = nullptr;
 iv_model_info* interfaces::model_info = nullptr;
+glow_manager_t *interfaces::glow_manager = nullptr;
 iv_model_render* interfaces::model_render = nullptr;
 void* interfaces::render_view = nullptr;
 iv_effects* interfaces::effects = nullptr;
@@ -40,7 +41,7 @@ void interfaces::initialize( ) {
 	debug_overlay = reinterpret_cast< iv_debug_overlay* >( utilities::game::capture_interface( "engine.dll", "VDebugOverlay004" ) );
 	effects = reinterpret_cast< iv_effects* >( utilities::game::capture_interface( "engine.dll", "VEngineEffects001" ) );
 	inputsystem = reinterpret_cast<i_inputsytem*>(utilities::game::capture_interface("inputsystem.dll", "InputSystemVersion001"));
-
+	glow_manager = (glow_manager_t *)(*(uintptr_t *)(utilities::pattern_scan(GetModuleHandleA("client_panorama.dll"), "0F 11 05 ? ? ? ? 83 C8 01 C7 05 ? ? ? ? 00 00 00 00") + 3));
 	clientmode = **reinterpret_cast< i_client_mode*** >( ( *reinterpret_cast< uintptr_t** >( client ) ) [ 10 ] + 5 );
 	clientstate = **( i_client_state*** ) ( utilities::pattern_scan( GetModuleHandleA( "engine.dll" ), "A1 ? ? ? ? 8B 80 ? ? ? ? C3" ) + 1 );
 	globals = **reinterpret_cast< c_global_vars_base*** >( ( *reinterpret_cast< uintptr_t** >( client ) [ 0 ] + 27 ) );

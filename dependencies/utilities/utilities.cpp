@@ -56,3 +56,35 @@ void* utilities::game::capture_interface( const char* mod, const char* iface ) {
 
 	return iface_addr;
 }
+
+void utilities::material_setup() {
+	std::ofstream("csgo/materials/fatality_material.vmt") << R"#("VertexLitGeneric" {
+            "$basetexture" "vgui/white_additive"
+            "$ignorez"      "0"
+            "$envmap"       ""
+            "$nofog"        "1"
+            "$model"        "1"
+            "$nocull"       "0"
+            "$selfillum"    "1"
+            "$halflambert"  "1"
+            "$znearer"      "0"
+            "$flat"         "0"
+			"$phong"		"1"
+			"$rimlight"		"1"
+        })#";
+
+	std::ofstream("csgo/materials/fatality_reflective.vmt") << R"#("VertexLitGeneric" {
+			"$basetexture" "vgui/white_additive"
+			"$ignorez" "0"
+			"$envmap" "env_cubemap"
+			"$normalmapalphaenvmapmask" "1"
+			"$envmapcontrast"  "1"
+			"$nofog" "1"
+			"$model" "1"
+			"$nocull" "0"
+			"$selfillum" "1"
+			"$halflambert" "1"
+			"$znearer" "0"
+			"$flat" "1"
+		})#";
+}

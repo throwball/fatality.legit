@@ -8,3 +8,4 @@
 4. Fix problem with dormant.
 5. Fix Nade Pred.
 6. Hitsounds
+7. Fix "Stuffilities" tab. cba to fix rn

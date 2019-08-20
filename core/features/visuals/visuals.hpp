@@ -6,6 +6,7 @@ public:
 	void run() noexcept;
 	void entity_esp(player_t * entity) noexcept;
 	void skeleton(player_t * entity) noexcept;
+	//void glow() noexcept;
 private:
 	int alpha[65];
 	bool last_dormant[65];

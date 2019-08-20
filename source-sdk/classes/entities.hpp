@@ -304,6 +304,10 @@ public:
 		return ret;
 	}
 
+	client_class* client_class1() {
+		using original_fn = client_class * (__thiscall*)(void*);
+		return (*(original_fn**)networkable())[2](networkable());
+	}
 	vec3_t get_bone_position(int bone) {
 		matrix_t bone_matrices[128];
 		if (setup_bones(bone_matrices, 128, 256, 0.0f))

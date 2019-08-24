@@ -1,0 +1,6 @@
+# CLion auto generated files
+/.idea
+# CMake
+/cmake-build-debug
+# ZGUI
+/dist

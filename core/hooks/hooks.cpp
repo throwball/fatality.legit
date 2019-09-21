@@ -64,16 +64,23 @@ void hooks::shutdown( ) {
 }
 
 bool __stdcall hooks::create_move( float frame_time, c_usercmd* user_cmd ) {
-	static auto original_fn = reinterpret_cast< create_move_fn >( clientmode_hook->get_original( 24 ) )( interfaces::clientmode, frame_time, user_cmd );
+
+	static auto original_fn = reinterpret_cast<create_move_fn>(clientmode_hook->get_original(24));
+	auto local_player = reinterpret_cast<player_t*>(interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()));
+	original_fn(interfaces::clientmode, frame_time, user_cmd); //fixed create move
+	bool& send_packet = *reinterpret_cast<bool*>(*(static_cast<uintptr_t*>(_AddressOfReturnAddress()) - 1) - 0x1C);
+
 	if (!user_cmd || !user_cmd->command_number)
 		return original_fn;
 
 	if (!interfaces::entity_list->get_client_entity(interfaces::engine->get_local_player()))
 		return original_fn;
 
+	backtrack.run(user_cmd);
+
 	if (interfaces::engine->is_connected() && interfaces::engine->is_in_game())
 	{
-		backtrack.run(user_cmd);
+
 		misc.Bhop(user_cmd);
 
 	}

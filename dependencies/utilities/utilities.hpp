@@ -11,22 +11,31 @@ namespace utilities {
 		int dwAddress = pVTable[index];
 		return (FuncType)(dwAddress);
 	}
-
 	namespace math {
-		template <typename t> t clamp_value( t value, t min, t max ) {
-			if ( value > max ) {
+		template <typename t> t clamp_value(t value, t min, t max) {
+			if (value > max) {
 				return max;
 			}
-			if ( value < min ) {
+			if (value < min) {
 				return min;
 			}
 			return value;
 		}
 	}
 	namespace game {
-		void* capture_interface( const char* mod, const char* iface );
+		void* capture_interface(const char* mod, const char* iface);
 	}
-	std::uint8_t* pattern_scan( void* module, const char* signature );
+
+	struct hud_weapons_t {
+		std::int32_t* get_weapon_count() {
+			return reinterpret_cast<std::int32_t*>(std::uintptr_t(this) + 0x80);
+		}
+	};
+
+
+	std::uint8_t* pattern_scan(void* module, const char* signature);
 
 	void material_setup();
+	template<class T>
+	static T* find_hud_element(const char* name);
 }

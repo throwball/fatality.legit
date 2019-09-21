@@ -131,11 +131,11 @@ public:
 	}
 	bool is_player( ) {
 		using original_fn = bool( __thiscall* )( entity_t* );
-		return ( *( original_fn** ) this )[ 152 ]( this );
+		return ( *( original_fn** ) this )[ 156 ]( this );
 	}
 	bool is_weapon( ) {
 		using original_fn = bool( __thiscall* )( entity_t* );
-		return ( *( original_fn** ) this )[ 160 ]( this );
+		return ( *( original_fn** ) this )[ 164 ]( this );
 	}
 	vec3_t get_absolute_origin() {
 		__asm {
@@ -202,16 +202,17 @@ public:
 
 	float get_innacuracy( ) {
 		using original_fn = float( __thiscall* )( void* );
-		return ( *( original_fn** ) this )[ 476 ]( this );
+		return ( *( original_fn** ) this )[ 477 ]( this );
 	}
 	float get_spread( ) {
 		using original_fn = float( __thiscall* )( void* );
-		return ( *( original_fn** ) this )[ 446 ]( this );
+		return ( *( original_fn** ) this )[ 447 ]( this );
 	}
 	void update_accuracy_penatly( ) {
 		using original_fn = void( __thiscall* )( void* );
-		( *( original_fn** ) this )[ 477 ]( this );
+		( *( original_fn** ) this )[ 478 ]( this );
 	}
+
 	weapon_info_t* get_weapon_data( ) {
 		using original_fn = weapon_info_t * ( __thiscall* )( void* );
 		static original_fn return_func = ( original_fn ) ( ( DWORD ) utilities::pattern_scan( GetModuleHandleA( "client_panorama.dll" ), "55 8B EC 81 EC ? ? ? ? 53 8B D9 56 57 8D 8B" ) );
@@ -287,16 +288,56 @@ public:
 	}
 	bool is_player() {
 		using original_fn = bool(__thiscall*)(entity_t*);
-		return (*(original_fn * *)this)[155](this);
+		return (*(original_fn * *)this)[156](this);
 	}
 	int	move_type() {
 		return *reinterpret_cast<int*> (reinterpret_cast<uintptr_t>(this) + 0x25C); //hazedumped
+	}
+
+	vec3_t get_eye_pos() {
+		return origin() + view_offset(); //hazedumper
 	}
 
 	vec3_t & abs_origin() {
 		using original_fn = vec3_t & (__thiscall*)(void*);
 		return (*(original_fn**)this)[10](this);;
 	}
+
+	bool is_enemy() {
+		static auto danger_zone = interfaces::console->get_convar("game_type");
+
+		if (!is_in_local_team() || danger_zone->get_int() == 6)
+			return true;
+		else
+			return false;
+	}
+
+	bool is_in_local_team() {
+		return utilities::call_virtual<bool(__thiscall*)(void*)>(this, 92)(this);
+	}
+
+	vec3_t get_hitbox_position(player_t* entity, int hitbox_id) {
+		matrix_t bone_matrix[MAXSTUDIOBONES];
+
+		if (entity->setup_bones(bone_matrix, MAXSTUDIOBONES, bone_used_by_hitbox, 0.0f)) {
+			auto studio_model = interfaces::model_info->get_studio_model(entity->model());
+
+			if (studio_model) {
+				auto hitbox = studio_model->hitbox_set(0)->hitbox(hitbox_id);
+
+				if (hitbox) {
+					auto min = vec3_t{}, max = vec3_t{};
+
+					math.transform_vector(hitbox->mins, bone_matrix[hitbox->bone], min);
+					math.transform_vector(hitbox->maxs, bone_matrix[hitbox->bone], max);
+
+					return vec3_t((min.x + max.x) * 0.5f, (min.y + max.y) * 0.5f, (min.z + max.z) * 0.5f);
+				}
+			}
+		}
+		return vec3_t{};
+	}
+
 
 	vec3_t eye_pos() {
 		vec3_t ret;

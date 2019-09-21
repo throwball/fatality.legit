@@ -1,13 +1,11 @@
-#pragma once
-
-class c_global_vars_base {
+class c_global_vars {
 public:
 	float realtime;
 	int frame_count;
 	float absolute_frametime;
 	float absolute_frame_start_time;
 	float cur_time;
-	float frame_time;
+	float frametime;
 	int max_clients;
 	int tick_count;
 	float interval_per_tick;

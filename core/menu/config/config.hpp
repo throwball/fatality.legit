@@ -17,6 +17,9 @@ public:
 	}
 
 	struct {
+		//Aimbot / BT
+		float backtrack_ms{ 0.0f };
+		bool backtrack{ false };
 		//Misc
 		bool misc_enabled{ false };
 		bool Bhop{ false };

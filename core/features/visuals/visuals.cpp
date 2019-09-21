@@ -35,9 +35,9 @@ void c_visuals::run() noexcept
 			continue;
 
 
-		const int fade = (int)((6.66666666667f * interfaces::globals->frame_time) * 255);
+		 int fade = (int)((6.66666666667f * interfaces::globals->frametime) * 255);
 
-		auto new_alpha = alpha[i];
+		auto new_alpha = m_alpha[i];
 		new_alpha += entity->dormant() ? -fade : fade;
 
 		if (new_alpha > (entity->has_gun_game_immunity() ? 130 : 210))
@@ -45,7 +45,7 @@ void c_visuals::run() noexcept
 		if (new_alpha < c_system.cfg.player_dormant ? 50 : 0)
 			new_alpha = c_system.cfg.player_dormant ? 50 : 0;
 
-		alpha[i] = new_alpha;
+		m_alpha[i] = new_alpha;
 
 		player_rendering(entity);
 		skeleton(entity);
@@ -118,16 +118,33 @@ void c_visuals::skeleton(player_t* entity) noexcept {
 			v_parent = entity->get_bone_position(bone->parent);
 
 			if (math.world_to_screen(v_parent, s_parent) && math.world_to_screen(v_child, s_child))
-				render::line(s_parent[0], s_parent[1], s_child[0], s_child[1], Color(255, 255, 255, alpha[entity->index()]));
+				render::line(s_parent[0], s_parent[1], s_child[0], s_child[1], Color(255, 255, 255, m_alpha[entity->index()]));
 		}
 	}
+}
+
+void c_visuals::dormant_fade(player_t *entity, const int idx) noexcept {
+
+	if (!c_system.cfg.player_dormant)
+		return;
+
+	const float step = 255.f * (20.f / 15.f) * interfaces::globals->frametime;
+
+	c_system.cfg.player_dormant ? entity->dormant()
+		? m_alpha.at(idx) -= step : m_alpha.at(idx) += step * 5.f : entity->dormant()
+		? m_alpha.at(idx) = 0.f : m_alpha.at(idx) = 220.f;
+
+	if (m_alpha.at(idx) > 220.f)
+		m_alpha.at(idx) = 220.f;
+	if (m_alpha.at(idx) < 0.f)
+		m_alpha.at(idx) = 0.f;
 }
 
 
 void c_visuals::player_rendering(player_t* entity) noexcept
 {
 	color = Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, c_system.cfg.box_clr.a);
-	if ((entity->dormant() && alpha[entity->index()] == 0) && !c_system.cfg.player_dormant)
+	if ((entity->dormant() && m_alpha[entity->index()] == 0) && !c_system.cfg.player_dormant)
 		return;
 
 	player_info_t info;
@@ -141,28 +158,26 @@ void c_visuals::player_rendering(player_t* entity) noexcept
 
 	if (c_system.cfg.player_box == 1) {
 		// normal box
-		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b + alpha[entity->index()]));
+		render::rect(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b + m_alpha[entity->index()]));
 	}
 		//edge
 	if (c_system.cfg.player_box == 2) {
-		render::draw_corner_box(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, Color(0, 0, 0, 255 + alpha[entity->index()]));
-		render::draw_corner_box(bbox.x, bbox.y, bbox.w, bbox.h, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, 255 + alpha[entity->index()]));
-		render::draw_corner_box(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(0, 0, 0, 255 + alpha[entity->index()]));
+		render::corner_box(bbox.x - 1, bbox.y - 1, bbox.w + 2, bbox.h + 2, Color(0, 0, 0, 255 + m_alpha[entity->index()]));
+		render::corner_box(bbox.x, bbox.y, bbox.w, bbox.h, Color(c_system.cfg.box_clr.r, c_system.cfg.box_clr.g, c_system.cfg.box_clr.b, 255 + m_alpha[entity->index()]));
+		render::corner_box(bbox.x + 1, bbox.y + 1, bbox.w - 2, bbox.h - 2, Color(0, 0, 0, 255 + m_alpha[entity->index()]));
 	}
 
 	if (c_system.cfg.player_health) {
 		box temp(bbox.x - 5, bbox.y + (bbox.h - bbox.h * (utilities::math::clamp_value<int>(entity->health(), 0, 100.f) / 100.f)), 1, bbox.h * (utilities::math::clamp_value<int>(entity->health(), 0, 100) / 100.f) - (entity->health() >= 100 ? 0 : -1));
 		box temp_bg(bbox.x - 5, bbox.y, 1, bbox.h);
 
-		auto health_color = Color((255 - entity->health() * 2.55), (entity->health() * 2.55), 0, alpha[entity->index()]);
+		auto health_color = Color((255 - entity->health() * 2.55), (entity->health() * 2.55), 0, m_alpha[entity->index()]);
 
 		if (entity->health() > 100)
 			health_color = Color(0, 255, 0);
 
-		render::filled_rect(temp_bg.x - 1, temp_bg.y - 1, temp_bg.w + 2, temp_bg.h + 2, Color(0, 0, 0, 25 + alpha[entity->index()]));
+		render::filled_rect(temp_bg.x - 1, temp_bg.y - 1, temp_bg.w + 2, temp_bg.h + 2, Color(0, 0, 0, 25 + m_alpha[entity->index()]));
 		render::filled_rect(temp.x, temp.y, temp.w, temp.h, Color(health_color));
 	}
 	 
-
-	
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../..//dependencies/utilities/utilities.hpp"
 
 class convar;
 using fn_change_callback_t = void( *)( convar* var, const char* pOldValue, float flOldValue );
@@ -179,6 +180,13 @@ public:
 		return ( *( original_fn** ) this ) [ 16 ]( this, static_cast< int >( value ) );
 	}
 
+	float get_float() {
+		return utilities::call_virtual<float(__thiscall*)(decltype(this)) >(this, 12)(this);
+	}
+
+	float get_int() {
+		return utilities::call_virtual<int(__thiscall*)(decltype(this)) > (this, 13)(this);
+	}
 
 private:
 	char pad_0x0000 [ 0x4 ];

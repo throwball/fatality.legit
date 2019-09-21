@@ -6,26 +6,11 @@ public:
 	void run() noexcept;
 	void entity_esp(player_t * entity) noexcept;
 	void skeleton(player_t * entity) noexcept;
+	void dormant_fade(player_t *entity, const int idx) noexcept;
 	//void glow() noexcept;
 private:
-	int alpha[65];
+
 	bool last_dormant[65];
-
-	std::string clean_item_name(std::string name) {
-		std::string Name = name;
-
-		auto weapon_start = Name.find("weapon");
-		if (weapon_start != std::string::npos)
-			Name.erase(Name.begin() + weapon_start, Name.begin() + weapon_start + 6);
-
-		if (Name[0] == '_')
-			Name.erase(Name.begin());
-
-		if (Name[0] == 'c') //optional for dropped weapons - designer
-			Name.erase(Name.begin());
-
-		return Name;
-	}
 
 	struct box {
 		int x, y, w, h;
@@ -92,5 +77,10 @@ private:
 	}
 
 	void player_rendering(player_t * entity) noexcept;
+
+	std::array< float, 64 > m_alpha;
+
 };
+
+
 extern c_visuals visuals;

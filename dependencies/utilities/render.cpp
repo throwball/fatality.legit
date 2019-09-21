@@ -14,7 +14,7 @@ void render::line(int x, int y, int x2, int y2, Color c) noexcept {
 	interfaces::surface->draw_line(x, y, x2, y2);
 }
 
-void render::draw_corner_box(int x, int y, int w, int h, Color c) {
+void render::corner_box(int x, int y, int w, int h, Color c) {
 	interfaces::surface->set_drawing_color(c.r, c.g, c.b, c.a);
 	interfaces::surface->draw_line(x, y, x, y + (h / 5));
 	interfaces::surface->draw_line(x, y, x + (w / 5), y);
@@ -61,5 +61,5 @@ void render::get_text_size(unsigned long font, std::string str, int& width, int&
 }
 
 float render::get_frametime() noexcept {
-	return interfaces::globals->frame_time;
+	return interfaces::globals->frametime;
 }

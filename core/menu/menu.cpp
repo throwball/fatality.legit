@@ -86,6 +86,9 @@ void misc()
 	zgui::begin_groupbox("misc", { 250, 100 }, render::main_font); {
 		zgui::checkbox("active", c_system.cfg.misc_enabled);
 		zgui::checkbox("bhop", c_system.cfg.Bhop);
+		zgui::text("backtrack for now");
+		zgui::checkbox("backtrack", c_system.cfg.backtrack);
+		zgui::slider_float("ticks(MS)", 0, 100, c_system.cfg.backtrack_ms);
 
 	}
 		zgui::end_groupbox();

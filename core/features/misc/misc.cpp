@@ -21,5 +21,3 @@ void cmisc::Bhop(c_usercmd* user_cmd) noexcept
 		user_cmd->buttons &= ~in_jump;
 	}
 }
-
-

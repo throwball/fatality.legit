@@ -3,6 +3,7 @@
 
 using quaternion = float [ 4 ];
 using rad_euler = float [ 3 ];
+#define MAXSTUDIOBONES		128		// total bones actually used
 
 enum bone_flags {
 	bone_calculate_mask = 0x1f,

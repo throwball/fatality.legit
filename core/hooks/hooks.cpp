@@ -5,6 +5,7 @@
 #include "../features/visuals/visuals.hpp"
 #include "../features/misc/misc.hpp"
 #include "../menu/zgui/zgui.hpp"
+#include "../features/backtrack/backtrack.hpp"
 
 std::unique_ptr<vmt_hook> hooks::client_hook;
 std::unique_ptr<vmt_hook> hooks::clientmode_hook;
@@ -72,6 +73,7 @@ bool __stdcall hooks::create_move( float frame_time, c_usercmd* user_cmd ) {
 
 	if (interfaces::engine->is_connected() && interfaces::engine->is_in_game())
 	{
+		backtrack.run(user_cmd);
 		misc.Bhop(user_cmd);
 
 	}
@@ -81,6 +83,11 @@ bool __stdcall hooks::create_move( float frame_time, c_usercmd* user_cmd ) {
 
 void __stdcall hooks::frame_stage_notify( int frame_stage ) {
 	reinterpret_cast< frame_stage_notify_fn >( client_hook->get_original( 37 ) )( interfaces::client, frame_stage );
+	static auto backtrack_init = (backtrack.init(), false);
+
+		 if (frame_stage == interfaces::engine->is_in_game()) {
+		backtrack.update();
+	}
 }
 
 void __stdcall hooks::paint_traverse( unsigned int panel, bool force_repaint, bool allow_force ) {
